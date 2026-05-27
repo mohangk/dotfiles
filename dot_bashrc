@@ -1,0 +1,77 @@
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+    . /etc/bashrc
+fi
+
+if [[ -n "$ANTIGRAVITY_AGENT" ]]; then
+    export PS1='$ '
+    unset PROMPT_COMMAND
+    [ -f ~/.agent_profile.sh ] && source ~/.agent_profile.sh
+    return
+fi
+
+# Local secrets; keep this file out of git.
+if [ -f "$HOME/.secrets" ]; then
+    set -a
+    source "$HOME/.secrets"
+    set +a
+fi
+
+# User environment
+if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]; then
+    PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+fi
+export PATH
+
+# Uncomment the following line if you don't like systemctl's auto-paging feature:
+# export SYSTEMD_PAGER=
+
+# User specific aliases and functions
+if [ -d ~/.bashrc.d ]; then
+    for rc in ~/.bashrc.d/*; do
+        if [ -f "$rc" ]; then
+            . "$rc"
+        fi
+    done
+fi
+unset rc
+
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+    *) return;;
+esac
+
+# Bash-it
+export BASH_IT="$HOME/.bash_it"
+export BASH_IT_THEME='bobby-python'
+export SCM_CHECK=true
+unset MAILCHECK
+[ -s "$BASH_IT/bash_it.sh" ] && source "$BASH_IT/bash_it.sh"
+
+# Toolchains and CLIs
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:$HOME/.lmstudio/bin"
+# End of LM Studio CLI section
+
+export LESS='-R'
+
+export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}
+export LD_LIBRARY_PATH=/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+
+export PATH=$PATH:$HOME/go/bin
+
+#adds locally built llama.cpp
+export PATH=$PATH:$HOME/Workspace/build-llama-cpp/llama.cpp/build/bin
+
+export GIT_EDITOR=vim
+
+# opencode
+export PATH="$HOME/.opencode/bin:$PATH"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

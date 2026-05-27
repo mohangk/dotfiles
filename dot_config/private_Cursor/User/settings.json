@@ -1,0 +1,8 @@
+{
+    "window.commandCenter": 1,
+    "cursor.cpp.enablePartialAccepts": true,
+    "redhat.telemetry.enabled": true,
+    "spellright.language": [
+        "en-US"
+    ]
+}

@@ -1,0 +1,10 @@
+# Local-only secrets and generated state.
+.secrets
+*.secret
+*.private
+
+# Tool/cache output that should not be committed if created in the source repo.
+.cache/
+tmp/
+*.log
+

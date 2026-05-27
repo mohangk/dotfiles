@@ -1,0 +1,39 @@
+# Repo-only docs, templates, and skill source.
+README.md
+skills/**
+.secrets.tmpl
+
+# Auth-generated or local-only state should never be applied from this repo.
+.secrets
+.env
+.boto
+.clasprc.json
+.cursor/mcp.json
+.codex/auth.json
+.claude/.credentials.json
+.gemini/google_accounts.json
+.config/gcloud/credentials.db
+.config/gcloud/access_tokens.db
+.ssh/id_ed25519
+.ssh/id_ed25519.pub
+.ssh/known_hosts
+.ssh/authorized_keys
+
+# Generated installs, plugins, caches, and app state.
+.tmux/plugins/**
+.bash_it/**
+.nvm/**
+.sdkman/**
+.rustup/**
+.gradle/**
+.npm/**
+.bun/**
+.cache/**
+.local/**
+.mozilla/**
+.config/google-chrome*/**
+.config/Cursor/User/globalStorage/**
+.cursor/extensions/**
+.bash_history
+.python_history
+.viminfo
