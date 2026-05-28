@@ -53,24 +53,29 @@ unset MAILCHECK
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
-# Added by LM Studio CLI (lms)
-export PATH="$PATH:$HOME/.lmstudio/bin"
-# End of LM Studio CLI section
+[ -d "$HOME/.lmstudio/bin" ] && export PATH="$PATH:$HOME/.lmstudio/bin"
 
 export LESS='-R'
 
-export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}
-export LD_LIBRARY_PATH=/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+if [ -d /usr/local/cuda/bin ]; then
+    export PATH="/usr/local/cuda/bin${PATH:+:${PATH}}"
+fi
+if [ -d /usr/local/cuda/lib64 ]; then
+    export LD_LIBRARY_PATH="/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
+fi
 
-export PATH=$PATH:$HOME/go/bin
+if [ -d "$HOME/go/bin" ]; then
+    export PATH="$PATH:$HOME/go/bin"
+fi
 
-#adds locally built llama.cpp
-export PATH=$PATH:$HOME/Workspace/build-llama-cpp/llama.cpp/build/bin
+LLAMA_CPP_BIN="$HOME/Workspace/build-llama-cpp/llama.cpp/build/bin"
+[ -d "$LLAMA_CPP_BIN" ] && export PATH="$PATH:$LLAMA_CPP_BIN"
+unset LLAMA_CPP_BIN
 
 export GIT_EDITOR=vim
 
 # opencode
-export PATH="$HOME/.opencode/bin:$PATH"
+[ -d "$HOME/.opencode/bin" ] && export PATH="$HOME/.opencode/bin:$PATH"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
