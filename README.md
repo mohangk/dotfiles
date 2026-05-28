@@ -63,19 +63,15 @@ system completion
 
 ## tmux
 
-This repo tracks `~/.tmux.conf`, not `~/.tmux/plugins`.
-
-Install TPM:
+This repo treats TPM as a required dependency. Chezmoi installs TPM with
+`run_once_after_10-install-tpm.sh`; to install or refresh it manually after
+applying `~/.tmux.conf`:
 
 ```bash
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+~/.local/share/chezmoi/run_once_after_10-install-tpm.sh
 ```
 
-Start tmux and install plugins:
-
-```text
-prefix + I
-```
+Inside tmux, `prefix + I` also installs missing plugins.
 
 Plugins declared in `~/.tmux.conf`:
 
