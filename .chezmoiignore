@@ -1,5 +1,6 @@
 # Repo-only docs, templates, and skill source.
 README.md
+docs/**
 skills/**
 .secrets.tmpl
 
