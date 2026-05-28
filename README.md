@@ -96,7 +96,7 @@ clasp login, if needed
 ## Skills
 
 External and tool-installed skills should be recorded in `skills/manifest.toml`.
-Personally authored skills should live under `skills/personal/<skill-name>/`.
+Personally authored skills should live under `~/.agents/skills/<skill-name>/`.
 
 System-managed Codex skills and plugin caches are not tracked:
 
