@@ -1,0 +1,29 @@
+# Shared Codex configuration.
+# Keep auth, project trust paths, marketplace cache paths, histories, and state DBs local.
+
+model = "gpt-5.5"
+model_reasoning_effort = "medium"
+
+[tui]
+# Start the Codex TUI composer in Vim normal mode.
+vim_mode = true
+
+[plugins."github@openai-curated"]
+enabled = true
+
+[plugins."chrome@openai-bundled"]
+enabled = true
+
+[plugins."documents@openai-primary-runtime"]
+enabled = true
+
+[plugins."spreadsheets@openai-primary-runtime"]
+enabled = true
+
+[plugins."presentations@openai-primary-runtime"]
+enabled = true
+
+# Add future MCP servers here, for example:
+# [mcp_servers.example]
+# command = "example-mcp-server"
+# args = ["--stdio"]

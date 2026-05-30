@@ -11,6 +11,18 @@ skills/**
 .clasprc.json
 .cursor/mcp.json
 .codex/auth.json
+.codex/.tmp/**
+.codex/cache/**
+.codex/plugins/**
+.codex/vendor_imports/**
+.codex/*.sqlite
+.codex/*.sqlite-shm
+.codex/*.sqlite-wal
+.codex/history.jsonl
+.codex/installation_id
+.codex/models_cache.json
+.codex/shell_snapshots/**
+.codex/version.json
 .claude/.credentials.json
 .gemini/google_accounts.json
 .config/gcloud/credentials.db
@@ -23,6 +35,13 @@ skills/**
 # Generated installs, plugins, caches, and app state.
 .tmux/plugins/**
 .bash_it/**
+.opencode/node_modules/**
+.config/opencode/node_modules/**
+.lmstudio/.internal/**
+.lmstudio/conversations/**
+.lmstudio/models/**
+.lmstudio/server-logs/**
+.config/LM Studio/**
 .nvm/**
 .sdkman/**
 .rustup/**
@@ -33,6 +52,8 @@ skills/**
 .local/**
 .mozilla/**
 .config/google-chrome*/**
+.config/Cursor/**
+.config/Windsurf/**
 .config/Cursor/User/globalStorage/**
 .cursor/extensions/**
 .bash_history

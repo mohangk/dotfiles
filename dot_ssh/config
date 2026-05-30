@@ -1,4 +1,32 @@
+Host pongo
+    HostName pongo
+    User mohan
+    IdentityFile ~/.ssh/id_ed25519
+    IdentitiesOnly yes
+    ServerAliveInterval 15
+    ServerAliveCountMax 4
+    Compression no
+    ForwardAgent yes
+
+Host minipc fedora
+    HostName fedora
+    User mohan
+    IdentityFile ~/.ssh/id_ed25519
+    IdentitiesOnly yes
+    ServerAliveInterval 15
+    ServerAliveCountMax 4
+    Compression no
+    ForwardAgent yes
+
+Host marmoset
+    HostName marmoset
+    User mohan
+    IdentityFile ~/.ssh/id_ed25519
+    IdentitiesOnly yes
+
 Host *
-  AddKeysToAgent yes
-  IdentityFile ~/.ssh/id_ed25519
-  ForwardAgent yes
+    AddKeysToAgent yes
+    IdentityFile ~/.ssh/id_ed25519
+    IdentitiesOnly yes
+    ServerAliveInterval 15
+    ServerAliveCountMax 4

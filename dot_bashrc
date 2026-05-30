@@ -1,13 +1,10 @@
-# Source global definitions
+# ~/.bashrc
+# Shared shell config for marmoset, the Fedora minipc, and pongo.
+# Keep host- or tool-specific entries guarded so the VPS can use the same file.
+
+# Fedora/RHEL system defaults.
 if [ -f /etc/bashrc ]; then
     . /etc/bashrc
-fi
-
-if [[ -n "$ANTIGRAVITY_AGENT" ]]; then
-    export PS1='$ '
-    unset PROMPT_COMMAND
-    [ -f ~/.agent_profile.sh ] && source ~/.agent_profile.sh
-    return
 fi
 
 # Local secrets; keep this file out of git.
@@ -17,24 +14,32 @@ if [ -f "$HOME/.secrets" ]; then
     set +a
 fi
 
-# User environment
-if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]; then
-    PATH="$HOME/.local/bin:$HOME/bin:$PATH"
-fi
+# PATH helpers used by the guarded tool sections below.
+path_has() {
+    case ":${PATH}:" in
+        *":$1:"*) return 0 ;;
+        *) return 1 ;;
+    esac
+}
+
+path_prepend() {
+    [ -d "$1" ] || return 0
+    path_has "$1" || PATH="$1${PATH:+:${PATH}}"
+}
+
+path_append() {
+    [ -d "$1" ] || return 0
+    path_has "$1" || PATH="${PATH:+${PATH}:}$1"
+}
+
+# User-local binaries. Chezmoi installs itself into ~/.local/bin on machines
+# where the package manager does not provide it.
+path_prepend "$HOME/bin"
+path_prepend "$HOME/.local/bin"
 export PATH
 
 # Uncomment the following line if you don't like systemctl's auto-paging feature:
 # export SYSTEMD_PAGER=
-
-# User specific aliases and functions
-if [ -d ~/.bashrc.d ]; then
-    for rc in ~/.bashrc.d/*; do
-        if [ -f "$rc" ]; then
-            . "$rc"
-        fi
-    done
-fi
-unset rc
 
 # If not running interactively, don't do anything
 case $- in
@@ -42,41 +47,45 @@ case $- in
     *) return;;
 esac
 
-# Bash-it
+# Bash-it prompt, aliases, completions, and plugins. The install directory is
+# created by run_once_after_20-install-bash-it.sh and is intentionally untracked.
 export BASH_IT="$HOME/.bash_it"
 export BASH_IT_THEME='bobby-python'
 export SCM_CHECK=true
 unset MAILCHECK
 [ -s "$BASH_IT/bash_it.sh" ] && source "$BASH_IT/bash_it.sh"
 
-# Toolchains and CLIs
+# SDKMAN, when installed.
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
-[ -d "$HOME/.lmstudio/bin" ] && export PATH="$PATH:$HOME/.lmstudio/bin"
-
 export LESS='-R'
+export GIT_EDITOR=vim
 
+# Workstation tools shared by marmoset and the Fedora minipc. These stay guarded
+# so pongo can use the same bashrc without having GUI/local-LLM tools installed.
+path_append "$HOME/.lmstudio/bin"
+path_prepend "$HOME/.opencode/bin"
+
+# CUDA is present only on GPU workstations.
 if [ -d /usr/local/cuda/bin ]; then
-    export PATH="/usr/local/cuda/bin${PATH:+:${PATH}}"
+    path_prepend /usr/local/cuda/bin
 fi
 if [ -d /usr/local/cuda/lib64 ]; then
     export LD_LIBRARY_PATH="/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
 fi
 
-if [ -d "$HOME/go/bin" ]; then
-    export PATH="$PATH:$HOME/go/bin"
-fi
+# Language/toolchain bins.
+path_append "$HOME/go/bin"
 
 LLAMA_CPP_BIN="$HOME/Workspace/build-llama-cpp/llama.cpp/build/bin"
-[ -d "$LLAMA_CPP_BIN" ] && export PATH="$PATH:$LLAMA_CPP_BIN"
+[ -d "$LLAMA_CPP_BIN" ] && path_append "$LLAMA_CPP_BIN"
 unset LLAMA_CPP_BIN
 
-export GIT_EDITOR=vim
-
-# opencode
-[ -d "$HOME/.opencode/bin" ] && export PATH="$HOME/.opencode/bin:$PATH"
-
+# nvm is installed per-machine and can be absent on pongo.
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export PATH
+unset -f path_has path_prepend path_append
