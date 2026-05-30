@@ -149,6 +149,37 @@ tmux-plugins/tmux-resurrect
 tmux-plugins/tmux-continuum
 ```
 
+## SSH Agent Forwarding In tmux
+
+Forwarded SSH agent sockets are connection-specific. If you disconnect from a
+host and later reattach to an old tmux session, the old `SSH_AUTH_SOCK` path can
+point at a dead socket.
+
+This repo manages `~/.ssh/rc`, which runs on every SSH login and repoints a
+stable symlink:
+
+```text
+~/.ssh/ssh_auth_sock -> latest forwarded agent socket
+```
+
+`~/.tmux.conf` sets new tmux panes and windows to use that stable path:
+
+```tmux
+set-environment -g SSH_AUTH_SOCK "$HOME/.ssh/ssh_auth_sock"
+```
+
+For an already-running tmux server, refresh the tmux global environment once:
+
+```bash
+tmux set-environment -g SSH_AUTH_SOCK "$HOME/.ssh/ssh_auth_sock"
+```
+
+For already-open shells, run:
+
+```bash
+export SSH_AUTH_SOCK="$HOME/.ssh/ssh_auth_sock"
+```
+
 ## Workstation Tools
 
 `~/.bashrc` is intentionally kept as one readable file. Workstation tools such

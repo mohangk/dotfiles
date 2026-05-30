@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Keep forwarded SSH agent sockets usable across reconnects and tmux reattach.
+# This script must not write to stdout/stderr; sshd may run it for scp/sftp too.
+if [ -n "${SSH_AUTH_SOCK:-}" ] && [ -S "${SSH_AUTH_SOCK}" ]; then
+    ln -sfn "${SSH_AUTH_SOCK}" "${HOME}/.ssh/ssh_auth_sock" >/dev/null 2>&1 || true
+fi
