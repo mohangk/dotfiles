@@ -54,6 +54,7 @@ export BASH_IT_THEME='bobby-python'
 export SCM_CHECK=true
 unset MAILCHECK
 [ -s "$BASH_IT/bash_it.sh" ] && source "$BASH_IT/bash_it.sh"
+SCM_NONE_CHAR=''
 
 # SDKMAN, when installed.
 export SDKMAN_DIR="$HOME/.sdkman"
