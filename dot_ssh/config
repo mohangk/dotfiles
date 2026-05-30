@@ -24,9 +24,14 @@ Host marmoset
     IdentityFile ~/.ssh/id_ed25519
     IdentitiesOnly yes
 
+Host github.com
+    HostName github.com
+    User git
+    IdentityFile none
+    IdentitiesOnly no
+    ForwardAgent no
+
 Host *
     AddKeysToAgent yes
-    IdentityFile ~/.ssh/id_ed25519
-    IdentitiesOnly yes
     ServerAliveInterval 15
     ServerAliveCountMax 4
