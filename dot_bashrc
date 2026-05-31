@@ -63,6 +63,17 @@ export SDKMAN_DIR="$HOME/.sdkman"
 export LESS='-R'
 export GIT_EDITOR=vim
 
+cdx() {
+    if [ "$#" -eq 0 ]; then
+        echo "usage: cdx <session-name> [codex-args...]" >&2
+        return 2
+    fi
+
+    local session_name="$1"
+    shift
+    codex resume "${session_name}" --dangerously-bypass-approvals-and-sandbox "$@"
+}
+
 # Workstation tools shared by marmoset and the Fedora minipc. These stay guarded
 # so pongo can use the same bashrc without having GUI/local-LLM tools installed.
 path_append "$HOME/.lmstudio/bin"
