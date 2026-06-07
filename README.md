@@ -263,9 +263,21 @@ There are currently no Codex MCP servers configured. Add future MCP servers with
 
 ## Skills
 
-External and tool-installed skills should be recorded in `skills/manifest.toml`.
-Shared skills should live under `dot_agents/skills/<skill-name>/` in this repo.
-Chezmoi applies those to `~/.agents/skills/<skill-name>/`.
+Shared personal or team skills are standardized through chezmoi:
+
+```text
+dot_agents/skills/<skill-name>/  ->  ~/.agents/skills/<skill-name>/
+```
+
+Record each shared skill in `skills/manifest.toml`. On a new machine, apply
+shared skills with:
+
+```bash
+chezmoi apply ~/.agents/skills
+```
+
+Do not move Codex-managed system skills into `~/.agents/skills`; leave those
+under `~/.codex/skills/.system`.
 
 System-managed Codex skills and plugin caches are not tracked:
 
