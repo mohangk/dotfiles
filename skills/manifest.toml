@@ -4,7 +4,7 @@
 [[skills]]
 name = "todoist-cli"
 source = "local"
-path = "skills/todoist-cli"
+path = "dot_agents/skills/todoist-cli"
 install_path = "~/.agents/skills/todoist-cli"
-installer = "manual"
+installer = "chezmoi apply"
 enabled = true
