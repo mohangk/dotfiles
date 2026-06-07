@@ -2,7 +2,9 @@
 # Add entries as skills are installed.
 
 [[skills]]
-name = "example"
-source = "replace-with-source"
-installer = "skills.sh"
-enabled = false
+name = "todoist-cli"
+source = "local"
+path = "skills/todoist-cli"
+install_path = "~/.agents/skills/todoist-cli"
+installer = "manual"
+enabled = true
