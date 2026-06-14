@@ -165,13 +165,22 @@ stable symlink:
 `~/.tmux.conf` sets new tmux panes and windows to use that stable path:
 
 ```tmux
+set -g update-environment "DISPLAY KRB5CCNAME MSYSTEM SSH_ASKPASS SSH_CONNECTION WINDOWID XAUTHORITY"
 set-environment -g SSH_AUTH_SOCK "$HOME/.ssh/ssh_auth_sock"
 ```
+
+Do not include `SSH_AUTH_SOCK` or `SSH_AGENT_PID` in tmux's
+`update-environment`. Those values are per-SSH-login socket paths; importing
+them on attach can overwrite the stable path in each tmux session.
 
 For an already-running tmux server, refresh the tmux global environment once:
 
 ```bash
+tmux source-file ~/.tmux.conf
 tmux set-environment -g SSH_AUTH_SOCK "$HOME/.ssh/ssh_auth_sock"
+for s in $(tmux list-sessions -F '#{session_name}'); do
+  tmux set-environment -t "$s" SSH_AUTH_SOCK "$HOME/.ssh/ssh_auth_sock"
+done
 ```
 
 For already-open shells, run:
