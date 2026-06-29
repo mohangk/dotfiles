@@ -56,6 +56,33 @@ Do not sync `~/.config/gws/credentials.enc`, `~/.config/gws/client_secret.json`,
 
 The local OAuth client file should remain an installed app client config. If API calls fail with a bogus project id, check the non-secret `project_id` in `~/.config/gws/client_secret.json`; it should be `mk-gws-cli`.
 
+## Credential Storage And Security
+
+`gws auth login` stores OAuth credentials encrypted at rest in `~/.config/gws/credentials.enc`. The packaged CLI documentation says this uses AES-256-GCM. The encryption key is stored in the OS keyring when available; on Linux/headless hosts the CLI may also use a file fallback at `~/.config/gws/.encryption_key`.
+
+On `pongo`, `gws auth status` currently reports:
+
+```text
+storage: encrypted
+keyring_backend: keyring
+encrypted_credentials: ~/.config/gws/credentials.enc
+project_id: mk-gws-cli
+```
+
+The local config directory also contains `~/.config/gws/.encryption_key` with mode `0600`, which means the encrypted credential file and decrypting key are both accessible to the local Unix account. This protects against accidental disclosure, broad file reads, backups that exclude dot-config secrets, and other users without permission to read Mohan's files. It does not protect against code already running as the same user, root, a compromised shell session, or a repo/dotfiles sync that copies the config directory.
+
+Security rules:
+
+```text
+Never commit or sync ~/.config/gws/credentials.enc
+Never commit or sync ~/.config/gws/.encryption_key
+Never commit or sync ~/.config/gws/token_cache.json
+Never commit or sync ~/.config/gws/client_secret.json
+Never print gws auth export --unmasked output
+Use temporary files for unmasked exports and delete them immediately
+Re-run OAuth per machine instead of copying credentials
+```
+
 ## Discovery
 
 Use help and schemas instead of guessing method names:
