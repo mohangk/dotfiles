@@ -1,7 +1,6 @@
 ---
 name: google-workspace-cli
 description: "Use the Google Workspace CLI (`gws`) via npx to access Mohan's Gmail, Google Sheets, Drive, Docs, Calendar, and other Workspace APIs. Use when the user asks to search or read Gmail, download attachments, inspect or update Google Sheets, or interact with Google Workspace data."
-compatibility: "Requires Node/npm and authenticated Google Workspace CLI encrypted credentials in ~/.config/gws/credentials.enc. Use gws auth login to create credentials per machine."
 ---
 
 # Google Workspace CLI
@@ -40,17 +39,21 @@ npx -y @googleworkspace/cli@0.22.5 auth login \
   --scopes 'https://mail.google.com/,https://www.googleapis.com/auth/gmail.settings.basic,https://www.googleapis.com/auth/gmail.labels,https://www.googleapis.com/auth/gmail.modify,https://www.googleapis.com/auth/spreadsheets,https://www.googleapis.com/auth/drive.file'
 
 # On laptop, using the exact callback port from the URL:
-ssh -L <port>:localhost:<port> mohan@pongo.lorikeet-dragon.ts.net
+ssh -N -L <port>:localhost:<port> mohan@pongo.lorikeet-dragon.ts.net
 ```
 
-Then open the printed Google OAuth URL in the laptop browser. After success, verify:
+Keep the SSH tunnel open, then paste the complete printed URL into a private/incognito browser window. On Google's granular consent screen, select every requested Gmail, Sheets, and Drive permission before continuing. A successful `gws auth login` message lists the scopes that were requested, so verify the stored grant separately rather than assuming all checkboxes were accepted.
+
+If the browser shows `Error 400: invalid_request`, retry with a fresh login/callback port and paste the raw URL from the terminal instead of opening a rendered or wrapped link. If it still fails, inspect the error detail immediately above `flowName=GeneralOAuthFlow`; it identifies the rejected or missing parameter.
+
+After success, verify both the scope list and harmless API reads:
 
 ```bash
 npx -y @googleworkspace/cli@0.22.5 auth status
 npx -y @googleworkspace/cli@0.22.5 gmail users getProfile --params '{"userId":"me"}'
 ```
 
-`auth status` should show project id `mk-gws-cli`, user `mohangk@gmail.com`, encrypted storage, a refresh token, and the requested scopes above.
+`auth status` should show project id `mk-gws-cli`, user `mohangk@gmail.com`, encrypted storage, a refresh token, and every requested scope above. If it shows only OpenID/userinfo scopes or API reads return `insufficient authentication scopes`, rerun login and explicitly select all granular permission checkboxes.
 
 Do not sync `~/.config/gws/credentials.enc`, `~/.config/gws/client_secret.json`, token caches, encryption keys, or unmasked exports through dotfiles. Re-run OAuth per machine when needed.
 
