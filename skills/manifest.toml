@@ -1,5 +1,13 @@
-# External skills installed directly or through tools like skills.sh.
+# Shared local and external skills, including skills installed through skills.sh.
 # Add entries as skills are installed.
+
+[[skills]]
+name = "mohan-google-workspace"
+source = "local"
+path = "dot_agents/skills/mohan-google-workspace"
+install_path = "~/.agents/skills/mohan-google-workspace"
+installer = "chezmoi apply"
+enabled = true
 
 [[skills]]
 name = "todoist-cli"
