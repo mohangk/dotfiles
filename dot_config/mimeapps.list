@@ -6,6 +6,7 @@ x-scheme-handler/https=google-chrome-unstable.desktop
 x-scheme-handler/about=google-chrome-unstable.desktop
 x-scheme-handler/unknown=google-chrome-unstable.desktop
 video/mp4=org.videolan.VLC.desktop
+x-scheme-handler/codex=chatgpt.desktop
 
 [Added Associations]
 x-scheme-handler/http=com.vivaldi.Vivaldi.desktop;

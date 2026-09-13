@@ -51,6 +51,7 @@
     "showResourceConsumptionWidget": false,
     "backendDownloadChannel": "stable",
     "appUpdateChannel": "stable",
+    "runtimeLogVerbosityLevel": 3,
     "allowDevelopmentPlugins": true,
     "unloadPreviousJITModelOnLoad": true,
     "jitModelTTL": {
@@ -78,6 +79,11 @@
     "tabStripFullStripStyle": false,
     "openDownloadsPaneOnStartNewModelDownload": false
   },
+  "cloudInference": {
+    "billingContext": {
+      "type": "personal"
+    }
+  },
   "configPresetInclusiveness": {
     "speculativeDecoding": false
   },
@@ -101,13 +107,14 @@
   "appPostUpdateNotificationPending": false,
   "promptWhenCommittingUnsavedChangesWithNewFields": false,
   "enableLocalService": true,
+  "useLlamaCppEngineProtocolRuntime3": true,
   "cliInstalled": false,
   "useHFProxy": true,
   "hfSearchToken": "",
   "hfDownloadToken": "",
   "defaultContextLength": {
     "type": "custom",
-    "value": 4096
+    "value": 8192
   },
   "appIntroAcceptedForBuild": null
 }
