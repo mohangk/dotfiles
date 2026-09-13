@@ -25,7 +25,10 @@
     "visualizeSpeculativeDecoding": false,
     "chatFullWidth": false,
     "neverAskForToolConfirmation": false,
-    "skipToolConfirmationPatterns": [],
+    "skipToolConfirmationPatterns": [
+      "mcp/duckduckgo-search:search",
+      "mcp/duckduckgo-search:*"
+    ],
     "showChatUtilityMenuLabels": true,
     "pinnedPlugins": [],
     "showRoleAndInsertButtons": false,
