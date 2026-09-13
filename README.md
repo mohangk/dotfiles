@@ -254,7 +254,9 @@ future MCP server definitions
 
 Do not track Codex auth, project trust paths, marketplace cache paths, bundled
 plugin caches, system skills, logs, histories, shell snapshots, or SQLite state.
-Those are generated per machine.
+Those are generated per machine. Also do not track MCP server definitions whose
+URLs embed tokens (for example the local Home Assistant MCP server); configure
+those per machine with `codex mcp add`.
 
 Currently enabled Codex plugins:
 
@@ -264,11 +266,18 @@ chrome@openai-bundled
 documents@openai-primary-runtime
 spreadsheets@openai-primary-runtime
 presentations@openai-primary-runtime
+sites@openai-bundled
+browser@openai-bundled
+visualize@openai-bundled
+google-calendar@openai-curated
+slack@openai-curated
+pdf@openai-primary-runtime
+template-creator@openai-primary-runtime
 ```
 
-There are currently no Codex MCP servers configured. Add future MCP servers with
-`codex mcp add ...`, then review and commit the resulting
-`~/.codex/config.toml` change.
+There are no Codex MCP servers tracked in this repo. Add portable MCP servers
+to `~/.codex/config.toml` with `codex mcp add ...`, then review and commit the
+resulting change.
 
 ## Skills
 
