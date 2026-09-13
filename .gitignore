@@ -8,3 +8,6 @@
 tmp/
 *.log
 
+# Editor swap/backup files.
+*.swp
+
