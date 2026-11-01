@@ -8,4 +8,4 @@ if ! command -v opencode >/dev/null 2>&1; then
     exit 0
 fi
 
-opencode plugin @leohenon/opencode-vim-plugin --global
+opencode plugin add @leohenon/opencode-vim-plugin
