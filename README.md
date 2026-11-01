@@ -298,8 +298,14 @@ pdf@openai-primary-runtime
 template-creator@openai-primary-runtime
 ```
 
-There are no Codex MCP servers tracked in this repo. Add portable MCP servers
-to `~/.codex/config.toml` with `codex mcp add ...`, then review and commit the
+The shared config also enables the Cloudflare MCP server:
+
+```text
+cloudflare  https://mcp.cloudflare.com/mcp
+```
+
+Its OAuth credentials are local. Add future portable MCP servers to
+`~/.codex/config.toml` with `codex mcp add ...`, then review and commit the
 resulting change.
 
 ## Skills

@@ -2,7 +2,7 @@
 # Keep auth, project trust paths, marketplace cache paths, MCP server tokens,
 # histories, and state DBs local.
 
-model = "gpt-5.6-sol"
+model = "gpt-6.1-sol"
 model_reasoning_effort = "high"
 
 [tui]
@@ -44,6 +44,15 @@ enabled = true
 
 [plugins."template-creator@openai-primary-runtime"]
 enabled = true
+
+[apps.connector_76869538009648d5b282a4bb21c3d157.tools.github_create_pull_request]
+approval_mode = "approve"
+
+[apps.connector_76869538009648d5b282a4bb21c3d157.tools.github_merge_pull_request]
+approval_mode = "approve"
+
+[mcp_servers.cloudflare]
+url = "https://mcp.cloudflare.com/mcp"
 
 # Add future MCP servers here, for example:
 # [mcp_servers.example]
