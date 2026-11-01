@@ -43,6 +43,51 @@ cdx() {
     codex resume "${session_name}" --dangerously-bypass-approvals-and-sandbox "$@"
 }
 
+oc() {
+    if [ "$#" -eq 0 ] || [ "${1#-}" != "$1" ]; then
+        opencode --auto "$@"
+        return
+    fi
+
+    local session="$1"
+    shift
+
+    # opencode --session takes a ses_... ID, so resolve an exact title first.
+    if [ "${session#ses_}" = "$session" ]; then
+        if ! command -v python3 >/dev/null 2>&1; then
+            echo "oc: python3 is required to resolve session titles; pass a ses_... ID" >&2
+            return 1
+        fi
+
+        local resolved
+        resolved=$(
+            opencode session list --max-count 1000 --format json 2>/dev/null |
+                python3 -c '
+import json, sys
+
+title = sys.argv[1]
+try:
+    sessions = json.load(sys.stdin)
+except Exception:
+    sys.exit(1)
+ids = [s["id"] for s in sessions if s.get("title") == title]
+if len(ids) == 1:
+    print(ids[0])
+else:
+    if ids:
+        print("\n".join(ids), file=sys.stderr)
+    sys.exit(1)
+' "$session"
+        ) || {
+            echo "oc: no unique session titled '$session' in this project; pass a ses_... ID" >&2
+            return 1
+        }
+        session="$resolved"
+    fi
+
+    opencode --auto -s "$session" "$@"
+}
+
 # User-local binaries. Chezmoi installs itself into ~/.local/bin on machines
 # where the package manager does not provide it.
 path_prepend "$HOME/bin"

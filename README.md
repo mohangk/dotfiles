@@ -231,6 +231,20 @@ default. Source them only when needed:
 source ~/scripts/claude_lm.sh
 ```
 
+## Session Helpers
+
+`~/.bashrc` defines two helpers for resuming agent sessions:
+
+```bash
+cdx [session]   # codex resume --dangerously-bypass-approvals-and-sandbox
+oc [session]    # opencode --auto, optionally resuming by ID or exact title
+```
+
+With no argument, `cdx` resumes Codex and `oc` starts a new OpenCode session.
+With an argument, both resume that session and forward any extra arguments.
+`oc` accepts either a `ses_...` session ID or an exact session title from the
+current project.
+
 ## Tool Login Flows
 
 Auth-generated files are intentionally excluded. Recreate them through each tool's login flow:
