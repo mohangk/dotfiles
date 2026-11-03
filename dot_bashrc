@@ -112,6 +112,21 @@ unset MAILCHECK
 [ -s "$BASH_IT/bash_it.sh" ] && source "$BASH_IT/bash_it.sh"
 SCM_NONE_CHAR=''
 
+# Recover mouse reporting after an SSH connection or terminal application dies.
+# Bash-it preserves the existing prompt hooks and avoids duplicate registration.
+if [[ "${TERM_PROGRAM:-}" == ghostty &&
+      -z "${SSH_CONNECTION:-}" && -z "${SSH_TTY:-}" && -z "${TMUX:-}" ]] &&
+    declare -F safe_append_prompt_command >/dev/null; then
+    __reset_mouse_reporting() {
+        local previous_status=$?
+        if [[ -t 1 ]]; then
+            printf '\e[?1000l\e[?1002l\e[?1003l\e[?1006l'
+        fi
+        return "$previous_status"
+    }
+    safe_append_prompt_command __reset_mouse_reporting
+fi
+
 # SDKMAN, when installed.
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"

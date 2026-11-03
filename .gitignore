@@ -7,6 +7,7 @@
 .cache/
 tmp/
 *.log
+__pycache__/
 
 # Editor swap/backup files.
 *.swp

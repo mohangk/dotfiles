@@ -132,6 +132,13 @@ system completion
 
 ## tmux
 
+Local interactive Ghostty shells reset mouse reporting before each prompt. This
+prevents mouse coordinates appearing as typed text after an SSH connection drops
+while tmux has mouse support enabled. The hook in `~/.bashrc` uses Bash-it's prompt
+registration and skips SSH sessions and tmux panes. Recovery happens when SSH
+exits and the local prompt returns; existing terminals can enable it with
+`source ~/.bashrc`. To recover manually, press Ctrl-U, type `reset`, and press Enter.
+
 This repo treats TPM as a required dependency. Chezmoi installs TPM with
 `run_once_after_10-install-tpm.sh`; to refresh it manually after applying
 `~/.tmux.conf`:
@@ -328,6 +335,12 @@ System-managed Codex skills and plugin caches are not tracked:
 ```
 
 ## Validation
+
+Run the terminal recovery tests with Bash-it installed:
+
+```bash
+python3 -m unittest discover -s tests -v
+```
 
 Run these after applying:
 
